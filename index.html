@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Invitación Fortnite Mateo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin:0;
+    font-family:'Trebuchet MS', sans-serif;
+    background: url('fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+  }
+  header {
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-bottom: 4px solid #ff00ff;
+    position: relative;
+  }
+  header img { width:200px; margin-bottom:10px; }
+  h1 { font-size:3em; color:#00c3ff; text-shadow:2px 2px 8px #000; }
+  .countdown { font-size:2em; margin:20px 0; font-weight:bold; color:#ffdd00; text-shadow:2px 2px 6px #000; }
+  .info {
+    background: rgba(0,0,0,0.7);
+    margin:20px auto;
+    padding:20px;
+    border-radius:15px;
+    width:80%;
+    max-width:600px;
+  }
+  a {
+    display:inline-block;
+    background:#00c3ff;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    margin:15px;
+    border-radius:10px;
+    font-weight:bold;
+    box-shadow:0 0 15px #000;
+  }
+  a:hover { background:#008ecc; }
+  #rsvpBtn {
+    background:#ff00ff;
+    cursor:pointer;
+    position:relative;
+    padding-left:60px;
+  }
+  #rsvpBtn img { position:absolute; left:10px; top:5px; width:40px; }
+  #confirmados { margin-top:20px; padding:10px; background: rgba(255,255,255,0.2); border-radius:10px; }
+  #llama { position:fixed; bottom:10px; right:10px; width:120px; z-index:10; animation:bounce 3s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
+  .spark { position:absolute; width:6px; height:6px; background:#ffdd00; border-radius:50%; animation:fall 5s linear infinite; opacity:0.8; }
+  @keyframes fall { from{transform:translateY(-10px);} to{transform:translateY(100vh);} }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Fortnite Logo">
+  <h1>🎉 Fiesta Fortnite - Mateo cumple 8 🎉</h1>
+  <p class="countdown" id="countdown"></p>
+</header>
+
+<div class="info">
+  <p><strong>📅 Fecha:</strong> 4 de octubre - 3:00 PM</p>
+  <p><strong>📍</strong> <a href="https://maps.app.goo.gl/dG5M8nGuvzNcXi46A?g_st=ac" target="_blank">Ubicación</a></p>
+
+  <a id="rsvpBtn">
+    <img src="cofre.png" alt="Cofre">
+    Confirmar asistencia
+  </a>
+</div>
+
+<div id="confirmados" class="info">
+  <h3>✅ Lista de confirmados:</h3>
+  <ul id="listaConfirmados"></ul>
+</div>
+
+<!-- Música -->
+<audio autoplay loop>
+  <source src="musica.mp3" type="audio/mp3">
+</audio>
+
+<!-- Llama flotante -->
+<img id="llama" src="llama.png" alt="Llama Fortnite">
+
+<script>
+  // Cuenta regresiva
+  const eventDate = new Date("Oct 4, 2025 15:00:00").getTime();
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = eventDate - now;
+    if(distance < 0){
+      document.getElementById("countdown").innerHTML="¡El evento ya comenzó!";
+      clearInterval(timer);
+      return;
+    }
+    const days=Math.floor(distance/(1000*60*60*24));
+    const hours=Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+    const minutes=Math.floor((distance % (1000*60*60))/(1000*60));
+    document.getElementById("countdown").innerHTML=${days}d ${hours}h ${minutes}m;
+  },1000);
+
+  // Confirmar asistencia
+  const rsvpBtn=document.getElementById('rsvpBtn');
+  const lista=document.getElementById('listaConfirmados');
+  rsvpBtn.addEventListener('click', ()=>{
+    const nombre=prompt("Escribe tu nombre para confirmar asistencia:");
+    if(nombre){
+      const li=document.createElement('li');
+      li.textContent=nombre;
+      lista.appendChild(li);
+      alert("¡Gracias por confirmar, "+nombre+"! 🎉");
+    }
+  });
+
+  // Chispas
+  function createSpark(){
+    const spark=document.createElement("div");
+    spark.classList.add("spark");
+    spark.style.left=Math.random()*window.innerWidth+"px";
+    spark.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),6000);
+  }
+  setInterval(createSpark,300);
+</script>
+
+</body>
+</html>
